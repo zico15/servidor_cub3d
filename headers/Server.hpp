@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 20:37:00 by ezequeil          #+#    #+#             */
-/*   Updated: 2023/04/17 13:18:59 by edos-san         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:48:52 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Server: public Socket {
 
 	private:
 		std::map<std::string, Map *> 	_channels;
-		std::string							_password;
+		std::string						_password;
 
 	public:
 		Server();
@@ -45,15 +45,11 @@ class Server: public Socket {
 		static void errorcommand(Server *server, Client *client, std::string data);
 		static void help(Server *server, Client *client, std::string data);
 		
-		static void leave(Server *server, Client *client, std::string data);
 		static void quit(Server *server, Client *client, std::string data);
-		static void who(Server *server, Client *client, std::string data);
-	    static void pass(Server *server, Client *client, std::string data);
 		static void	fd(Server *server, Client *client, std::string data);
-		static void	cap(Server *server, Client *client, std::string data);
 		static void	notice(Server *server, Client *client, std::string data);
 
-		Map *	addMap(std::string const name, const std::string channelpass);
+		Map 	*addMap(std::string const name);
 };
 
 #endif

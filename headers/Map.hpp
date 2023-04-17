@@ -25,7 +25,7 @@ class Server;
 class Map {
 
 	private:
-		std::string							_channel;
+		std::string							_name;
 		std::string							_pass;
 		std::vector<Client *>				_clients;
 		std::vector<std::string>			_msg;
@@ -33,38 +33,17 @@ class Map {
 		std::vector<Client *>				_op;
 
 	public:	
-		Map(std::string	channel);
-		Map(std::string	channel, std::string channelpass);
+		Map(std::string	name);
 		~Map();
 		void 				   add(Client *client, Server *server);
-		void 				  remove(Server *server, Client *client);
-		std::string 		  getName();
-		std::vector<Client *> &getClients();
-		size_t 					getSize();
-		std::string 			getpass();
-		std::string				getTopic() const;
-		void					setTopic(std::string topic);
+		void 				   remove(Server *server, Client *client);
+		std::string 		   getName();
+		std::vector<Client *>  &getClients();
+		size_t 				   getSize();
 
-		bool 		isInTheMap(Client *client);
-		bool		isOp(Client * client);
 		void 		send(Server *server, Client *client, std::string message);
-		void		rmOp(Server *server, Client *client);
-		std::string nicksOnMap(void);
-		
-		void 		who(Server *server, Client *client);
-
-		static void join(Server *server, Client *client, std::string data);
-		static void leave(Server *server, Client *client, std::string data);
-		static void list(Server *server, Client *client, std::string data);
-		static void mode(Server *server, Client *client, std::string data);
-		static void kick(Server *server, Client *client, std::string data);
-		static void	topic(Server *server, Client *client, std::string data);
 
 };
-
-
-
-std::ostream& operator<<(std::ostream& os, Map *channel);
 
 
 #endif
