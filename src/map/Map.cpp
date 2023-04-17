@@ -29,8 +29,8 @@ Map::~Map()
 }
 
 void Map::add(Client *client, Server *server) {
-    (void) client;
-    (void) server;
+    client->setMap(this);
+    this->_clients.push_back(client);
 }
 
 
@@ -70,7 +70,7 @@ void Map::send(Server *server, Client *client, std::string message)
     
     for (it = _clients.begin(); it < _clients.end(); ++it)
     {
-        if (!*it || client == (*it))
+        if (client == (*it))
             continue ;
         server->send((*it), message);
     }

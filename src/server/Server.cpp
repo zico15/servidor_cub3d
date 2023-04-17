@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:36:54 by edos-san          #+#    #+#             */
-/*   Updated: 2023/04/17 13:48:30 by edos-san         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:08:00 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,36 @@ Server::Server(std::string hostname, int port, std::string password): _password(
 
     //Server
     on("FD", &Server::fd);
+    on("PS", &Server::position);
     on("QUIT", &Server::quit);
     on("NOTICE", &Server::notice);
+    on("NEW", &Server::newplayer);
     addMap("Test");
-    Map *map = getMap("Test");
-    std::cout << "Map: " << (map != NULL) << "\n";
     //Client
 
     //Map
 }
 
+/*
+*/
+void Server::newplayer(Server *server, Client *client, std::string data)
+{
+    data = "NEW " + data;
+
+    if (client->getMap())
+        client->getMap()->send(server, client, data);
+}
+
+/*
+*/
+void Server::position(Server *server, Client *client, std::string data)
+{
+    data = "PS " + data;
+    client->setPosition(data);
+    if (client->getMap())
+        client->getMap()->send(server, client, data);
+    std::cout << "T-> " << data << " \n";
+}
 
 
 /*
@@ -55,9 +75,10 @@ void Server::quit(Server *server, Client *client, std::string data)
 //The function in bellow will send the message: "PONG :data" read for information here: 4.6.3 Pong message
 void Server::fd(Server *server, Client *client, std::string data)
 {
-    (void) data;
-   // std::string reply ="FD :" + ft_itoa(client->getFd());
-    server->send(client, "reply");
+    data = "FD: " +  ft_itoa(client->getFd());
+    std::cout <<  data<< "\n";
+    server->send(client, data);
+
 }
 
 
@@ -92,7 +113,9 @@ void Server::connect()
         if (getSocket(i).fd == -1)
 		{
 			setEvent(i, fd_client, POLLIN | POLLHUP);
-            addClient(i, new Client(getSocket(i).fd, i, hostname));
+            Client *client =  new Client(getSocket(i).fd, i, hostname);
+            addClient(i, client);
+            getMap("Test")->add(client, this);
 			break;
 		}
     }

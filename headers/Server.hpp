@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 20:37:00 by ezequeil          #+#    #+#             */
-/*   Updated: 2023/04/17 13:48:52 by edos-san         ###   ########.fr       */
+/*   Updated: 2023/04/17 20:51:52 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ class Server: public Socket {
 		static void quit(Server *server, Client *client, std::string data);
 		static void	fd(Server *server, Client *client, std::string data);
 		static void	notice(Server *server, Client *client, std::string data);
-
+		static void position(Server *server, Client *client, std::string data);
+		static void newplayer(Server *server, Client *client, std::string data);
+		
 		Map 	*addMap(std::string const name);
 };
 

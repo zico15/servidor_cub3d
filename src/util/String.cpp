@@ -14,6 +14,9 @@
 # include <iostream>
 # include <vector>//added
 //# include  <bits/stdc++.h>
+#include <iostream>
+
+#include <sstream> 
 
 bool	isEqual(char c, const std::string &str)
 {
@@ -64,20 +67,18 @@ bool isNumber(std::string str)
     return true; 
 }
 
-// static char	*ft_convert_base(char *str, int n, char *base, int size_base)
-// {
-// 	if (n <= -10 || n >= 10)
-// 		str = ft_convert_base(str, (n / size_base), base, size_base);
-// 	*str++ = base[(n % size_base) * ((n > 0) - (n < 0))];
-// 	*str = 0;
-// 	return (str);
-// }
+std::string ft_itoa(int n)
+{
+	std::stringstream ds;
 
-// std::string ft_itoa(int n)
-// {
-// 	char	buff[12];
+	ds << n;
+	return (ds.str());
+}
 
-// 	buff[0] = '-';
-// 	ft_convert_base(buff + (n < 0), n, "0123456789", 10);
-// 	return (buff);
-// }
+std::string ft_itoaf(float n)
+{
+	std::stringstream ds;
+
+	ds << n;
+	return (ds.str());
+}
