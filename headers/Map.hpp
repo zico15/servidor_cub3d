@@ -40,6 +40,7 @@ class Map {
 		std::string 		   getName();
 		std::vector<Client *>  &getClients();
 		size_t 				   getSize();
+		void 				   newPlayer(Server *server, Client *client);
 
 		void 		send(Server *server, Client *client, std::string message);
 

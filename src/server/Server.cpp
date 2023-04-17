@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 21:36:54 by edos-san          #+#    #+#             */
-/*   Updated: 2023/04/17 21:08:00 by edos-san         ###   ########.fr       */
+/*   Updated: 2023/04/17 22:19:55 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ Server::Server(std::string hostname, int port, std::string password): _password(
     on("QUIT", &Server::quit);
     on("NOTICE", &Server::notice);
     on("NEW", &Server::newplayer);
+    on("RT", &Server::notice);
     addMap("Test");
     //Client
 
@@ -47,8 +48,12 @@ void Server::newplayer(Server *server, Client *client, std::string data)
 {
     data = "NEW " + data;
 
+    client->setPosition("PS" + data.substr(3));
     if (client->getMap())
+    {    
         client->getMap()->send(server, client, data);
+        client->getMap()->newPlayer(server, client);
+    }
 }
 
 /*
@@ -57,9 +62,8 @@ void Server::position(Server *server, Client *client, std::string data)
 {
     data = "PS " + data;
     client->setPosition(data);
-    if (client->getMap())
-        client->getMap()->send(server, client, data);
-    std::cout << "T-> " << data << " \n";
+    if (client->getMap()) 
+        client->getMap()->send(server, client, data);   
 }
 
 
@@ -84,16 +88,17 @@ void Server::fd(Server *server, Client *client, std::string data)
 
 void Server::notice(Server *server, Client *client, std::string data)
 {
-    (void)client;
+    // (void)client;
 
-    std::string target = data.substr(0, (data.find(" ")));
-    std::string message = ":test NOTICE " + target;
-    message += data.substr(data.find(" "), data.size());
-    //std::cout << "O valor-------->" << message << "\n";
-    if (server->getMaps()[target])
-        server->getMaps()[target]->send(server, NULL, message);
-    else if (server->getClient(target))
-        server->send(server->getClient(target), message);
+	std::cout << "notice: " << data << std::endl;
+    // std::string target = data.substr(0, (data.find(" ")));
+    // std::string message = ":test NOTICE " + target;
+    // message += data.substr(data.find(" "), data.size());
+    // //std::cout << "O valor-------->" << message << "\n";
+    // if (server->getMaps()[target])
+    //     server->getMaps()[target]->send(server, NULL, message);
+    // else if (server->getClient(target))
+    //     server->send(server->getClient(target), message);
 }
 
 void Server::connect()

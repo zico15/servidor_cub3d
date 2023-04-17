@@ -6,7 +6,7 @@
 /*   By: edos-san <edos-san@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 22:40:38 by edos-san          #+#    #+#             */
-/*   Updated: 2023/04/17 13:32:49 by edos-san         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:59:22 by edos-san         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,7 @@ void Client::setMap(Map *map)
 Map *Client::getMap()
 {
 	return _map;
-};
+}
+
+
+

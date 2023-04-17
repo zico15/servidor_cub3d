@@ -76,3 +76,21 @@ void Map::send(Server *server, Client *client, std::string message)
     }
 }
 
+
+void Map::newPlayer(Server *server, Client *client)
+{
+   std::vector<Client *>::iterator it;
+   std::string data;
+    
+    for (it = _clients.begin(); it < _clients.end(); ++it)
+    {
+        if (client == (*it))
+            continue ;
+        std::string a = (*it)->getPosition();
+        std::cout << "s -> " << a << "\n";
+        data =  "NEW " + a.substr(2);
+        std::cout << "d ->" << data << "\n";
+        server->send(client, data);
+    }
+}
+
